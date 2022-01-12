@@ -1,4 +1,6 @@
 
+var gameStatus = "";
+
 /*created by prashant shukla */
 
 var paddle2 =10,paddle1=10;
@@ -49,7 +51,10 @@ if (results.length > 0)
 }
 }
 
-function restart() {}
+function start() {
+  gameStatus = 'start';
+  document.getElementById('status').innerHTML = "Status - Game is loading";
+}
 
 
 
@@ -60,8 +65,10 @@ function draw(){
 // stroke(#123456)
 //circle(xRW, yRW, 20)
 //  }
+  background(0); 
+  image(video, 0, 0, 700, 600);
 
- background(0); 
+
 
  fill("black");
  stroke("black");
@@ -70,7 +77,7 @@ function draw(){
  fill("black");
  stroke("black");
  rect(0,0,20,700);
- 
+ if (gameStatus == "start") {
    //funtion paddleInCanvas call 
    paddleInCanvas();
  
@@ -98,6 +105,7 @@ function draw(){
    
    //function move call which in very important
     move();
+ }
 }
 
 
