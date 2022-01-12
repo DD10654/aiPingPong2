@@ -1,5 +1,8 @@
 
 var gameStatus = "";
+rightWristY = 0;
+rightWristX = 0;
+scoreRightWrist = 0;
 
 /*created by prashant shukla */
 
@@ -23,10 +26,6 @@ var ball = {
     dy:3
 }
 
-xRW = "";
-yRW = "";
-scoreRW = "";
-
 function setup(){
   var canvas =  createCanvas(700,600);
   canvas.parent("canvas_place")
@@ -45,9 +44,10 @@ function modelLoaded() {
 function gotPoses(results) {
 if (results.length > 0)
   {  console.log(results);
-  xRW = results[0].pose.rightWrist.x;
-  yRW = results[0].pose.rightWrist.y;
-//  scoreRW = results[0].pose.score
+  rightWristX = results[0].pose.rightWrist.x;
+  rightWristY = results[0].pose.rightWrist.y;
+  scoreRightWrist = results[0].pose.keypoints[10].score;
+  console.log(scoreRightWrist);
 }
 }
 
@@ -77,7 +77,15 @@ function draw(){
  fill("black");
  stroke("black");
  rect(0,0,20,700);
+
+ if (scoreRightWrist > 0.2) {
+   fill("red");
+   stroke("red");
+   circle(rightWristX, rightWristY, 30);
+ }
+
  if (gameStatus == "start") {
+   document.getElementById("status").innerHTML = "Game is loaded";
    //funtion paddleInCanvas call 
    paddleInCanvas();
  
@@ -85,7 +93,7 @@ function draw(){
    fill(250,0,0);
     stroke(0,0,250);
     strokeWeight(0.5);
-   paddle1Y = mouseY; 
+   paddle1Y = rightWristY; 
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
    
